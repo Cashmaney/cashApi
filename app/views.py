@@ -96,6 +96,7 @@ class ImageViewSet(viewsets.ModelViewSet):
         :param serializer:
         :return:
         """
+        #filename = self.kwargs.get('filename')
         serializer.save(user=self.request.user, filename=self.kwargs.get('filename'))
 
     @staticmethod

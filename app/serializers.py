@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework.fields import CharField
+
 from .models import UploadModel
 
 class Base64ImageField(serializers.ImageField):
@@ -61,14 +63,13 @@ class Base64ImageField(serializers.ImageField):
         return extension
 
 
-class ImageSerializer(serializers.HyperlinkedModelSerializer):
+class ImageSerializer(serializers.ModelSerializer):
 
     file = Base64ImageField(
         max_length=None, use_url=False,
     )
     user = serializers.ReadOnlyField(source='user.username')
-    filename = serializers.SlugField()
 
     class Meta:
         model = UploadModel
-        fields = ('file', 'id', 'user', 'filename')
+        fields = ('file', 'id', 'user', 'filename', 'uploaded_at')

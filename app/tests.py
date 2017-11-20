@@ -78,7 +78,7 @@ class TestUploadCase(TestCase):
         data_uri_format = "data:image/png;base64," + photo_file.decode('ascii')
         return data_uri_format
 
-    def test_list_and_detail(self):
+    def test_1_list_and_detail(self):
         """
         Method to test the uploading of an image file in base64 by a registered user, and retrieving it by the same user
 
@@ -101,29 +101,29 @@ class TestUploadCase(TestCase):
             'file':photo_file
         }
 
-        url = reverse('image_detail', args=[self.testuser.id])
+        url = reverse('image_detail', args=['new_file'])
         response = self.client.post(url, data, HTTP_AUTHORIZATION=token)
-        if (self.print_output):
+        if self.print_output:
             print(response.content)
         self.assertEqual(response.status_code, 201)
 
         url = reverse('image_list')
         response = self.client.get(url, HTTP_AUTHORIZATION=token)
-        if (self.print_output):
+        if self.print_output:
             print(response.content)
         self.assertEqual(response.status_code, 200)
 
-        url = reverse('image_detail', args=[self.testuser.id])
-        # response.data[0].get('file')
+        url = reverse('image_detail', args=['new_file'])
         response = self.client.get(url, HTTP_AUTHORIZATION=token)
-        if (self.print_output):
+        if self.print_output:
             print(response.content)
         self.assertEqual(response.status_code, 200)
+        return
 
-    def test_get_file_from_other_owner(self):
+    def test_2_get_file_from_other_owner(self):
         """
-        Here we try to get the same file that was uploaded by testuser from testuser_evil. We should get a 404 not found,
-        obviously
+        Here we try to get the same file name that was uploaded by testuser from testuser_evil. We should get a
+        not found response
 
         :return:
         """
@@ -131,4 +131,29 @@ class TestUploadCase(TestCase):
         url = reverse('image_detail', args=[self.testuser.id])
         # response.data[0].get('file')
         response = self.client.get(url, HTTP_AUTHORIZATION=token)
+        if self.print_output:
+            print(response.content)
         self.assertNotEqual(response.status_code, 200, 201)
+        return
+
+    def test_3_upload_malicious_file_path(self):
+        """
+        Here we try to upload a file with a malicious file name from testuser_evil. We expect a 404 not found, and for
+        the file not to be created, obviously
+
+        :return:
+        """
+        token = self.__create_authorization_header(self.__create_token(self.testuser_evil))
+        bytes_str = self.generate_photo_file().read()
+        photo_file = self.build_data(bytes_str)
+
+        data = {
+            'file':photo_file
+        }
+        #url = reverse('image_detail', args=[self.testuser_evil.id])
+        url = "/images/../../../../3.png"
+        response = self.client.post(url,data, HTTP_AUTHORIZATION=token)
+        if self.print_output:
+            print(response.content)
+        self.assertNotEqual(response.status_code, 200, 201)
+        return
