@@ -10,13 +10,24 @@ from PIL import Image
 
 
 class TestUploadCase(TestCase):
+    """
+    Test class for all image upload API. See specific test details in the methods
+
+    @:param print_output - set to True/False to print the output of the tests
+
+    """
     def setUp(self):
         self.factory = RequestFactory()
         self.testuser = User.objects.create_user(
             username='jacob', email='jacob@…', password='top_secret', is_active=True,
         is_staff=False)
+        self.testuser_evil = User.objects.create_user(
+            username='bob', email='bob@…', password='bob_secret', is_active=True,
+            is_staff=False)
         self.client = Client()
         self.func_under_test = FileUpload()
+
+        self.print_output = True
 
     @staticmethod
     def generate_photo_file():
@@ -67,9 +78,9 @@ class TestUploadCase(TestCase):
         data_uri_format = "data:image/png;base64," + photo_file.decode('ascii')
         return data_uri_format
 
-    def test_details(self):
+    def test_list_and_detail(self):
         """
-        Method to test the uploading of an image file in base64 by a registered user.
+        Method to test the uploading of an image file in base64 by a registered user, and retrieving it by the same user
 
         Flow: register test user
               log in the test user
@@ -90,9 +101,34 @@ class TestUploadCase(TestCase):
             'file':photo_file
         }
 
-        url = reverse('img_upload', args=[self.testuser.id])
-
+        url = reverse('image_detail', args=[self.testuser.id])
         response = self.client.post(url, data, HTTP_AUTHORIZATION=token)
-
+        if (self.print_output):
+            print(response.content)
         self.assertEqual(response.status_code, 201)
 
+        url = reverse('image_list')
+        response = self.client.get(url, HTTP_AUTHORIZATION=token)
+        if (self.print_output):
+            print(response.content)
+        self.assertEqual(response.status_code, 200)
+
+        url = reverse('image_detail', args=[self.testuser.id])
+        # response.data[0].get('file')
+        response = self.client.get(url, HTTP_AUTHORIZATION=token)
+        if (self.print_output):
+            print(response.content)
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_file_from_other_owner(self):
+        """
+        Here we try to get the same file that was uploaded by testuser from testuser_evil. We should get a 404 not found,
+        obviously
+
+        :return:
+        """
+        token = self.__create_authorization_header(self.__create_token(self.testuser_evil))
+        url = reverse('image_detail', args=[self.testuser.id])
+        # response.data[0].get('file')
+        response = self.client.get(url, HTTP_AUTHORIZATION=token)
+        self.assertNotEqual(response.status_code, 200, 201)

@@ -61,12 +61,14 @@ class Base64ImageField(serializers.ImageField):
         return extension
 
 
-class ImageSerializer(serializers.ModelSerializer):
+class ImageSerializer(serializers.HyperlinkedModelSerializer):
 
     file = Base64ImageField(
-        max_length=None, use_url=True,
+        max_length=None, use_url=False,
     )
+    user = serializers.ReadOnlyField(source='user.username')
+    filename = serializers.ReadOnlyField()
 
     class Meta:
         model = UploadModel
-        fields = ('file', )
+        fields = ('file', 'id', 'user', 'filename')
