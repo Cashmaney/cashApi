@@ -67,7 +67,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
         max_length=None, use_url=False,
     )
     user = serializers.ReadOnlyField(source='user.username')
-    filename = serializers.ReadOnlyField()
+    filename = serializers.SlugField()
 
     class Meta:
         model = UploadModel
