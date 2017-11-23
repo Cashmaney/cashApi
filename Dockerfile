@@ -17,7 +17,7 @@ RUN apt-get update && \
 # ----------------------------------------
 
 ENV PYTHONUNBUFFERED 1
-RUN mkdir /var/app
+# RUN mkdir /var/app
 WORKDIR  /var/app
 COPY requirements.txt /var/app/requirements.txt
 RUN pip install -r requirements.txt
