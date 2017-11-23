@@ -2,15 +2,14 @@ import os
 
 from django.contrib.auth.models import User
 from django.db import models
-
-from app.apps import AppConfig
-from cashApi import settings
 from social_django.models import AbstractUserSocialAuth, DjangoStorage, USER_MODEL
+
+from settings import common
 
 
 def user_directory_path(self, generated_filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    user_directory = settings.MEDIA_ROOT + 'user_{0}'.format(self.user.id)
+    user_directory = common.MEDIA_ROOT + 'user_{0}'.format(self.user.id)
 
     gen_name, gen_ext = generated_filename.split('.')
 

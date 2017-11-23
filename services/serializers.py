@@ -3,6 +3,7 @@ from rest_framework.fields import CharField
 
 from .models import UploadModel
 
+
 class Base64ImageField(serializers.ImageField):
     """
     Handles data in the data URI scheme (see: https://en.wikipedia.org/wiki/Data_URI_scheme)

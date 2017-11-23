@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test.client import RequestFactory, Client
 from oauth2_provider.oauth2_validators import Application, AccessToken
 
-from app.views import FileUpload
+from services.views import FileUpload
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 import io
@@ -20,7 +20,7 @@ class TestUploadCase(TestCase):
         self.factory = RequestFactory()
         self.testuser = User.objects.create_user(
             username='jacob', email='jacob@…', password='top_secret', is_active=True,
-        is_staff=False)
+            is_staff=False)
         self.testuser_evil = User.objects.create_user(
             username='bob', email='bob@…', password='bob_secret', is_active=True,
             is_staff=False)
@@ -102,19 +102,19 @@ class TestUploadCase(TestCase):
         }
 
         url = reverse('image_detail', args=['new_file'])
-        response = self.client.post(url, data, HTTP_AUTHORIZATION=token)
+        response = self.client.post('http://cashapi-dev.eu-central-1.elasticbeanstalk.com' + url, data, HTTP_AUTHORIZATION=token)
         if self.print_output:
             print(response.content)
         self.assertEqual(response.status_code, 201)
 
         url = reverse('image_list')
-        response = self.client.get(url, HTTP_AUTHORIZATION=token)
+        response = self.client.get('http://cashapi-dev.eu-central-1.elasticbeanstalk.com' + url, HTTP_AUTHORIZATION=token)
         if self.print_output:
             print(response.content)
         self.assertEqual(response.status_code, 200)
 
         url = reverse('image_detail', args=['new_file'])
-        response = self.client.get(url, HTTP_AUTHORIZATION=token)
+        response = self.client.get('http://cashapi-dev.eu-central-1.elasticbeanstalk.com' + url, HTTP_AUTHORIZATION=token)
         if self.print_output:
             print(response.content)
         self.assertEqual(response.status_code, 200)
@@ -130,7 +130,7 @@ class TestUploadCase(TestCase):
         token = self.__create_authorization_header(self.__create_token(self.testuser_evil))
         url = reverse('image_detail', args=[self.testuser.id])
         # response.data[0].get('file')
-        response = self.client.get(url, HTTP_AUTHORIZATION=token)
+        response = self.client.get('http://cashapi-dev.eu-central-1.elasticbeanstalk.com' + url, HTTP_AUTHORIZATION=token)
         if self.print_output:
             print(response.content)
         self.assertNotEqual(response.status_code, 200, 201)
@@ -152,7 +152,7 @@ class TestUploadCase(TestCase):
         }
         #url = reverse('image_detail', args=[self.testuser_evil.id])
         url = "/images/../../../../3.png"
-        response = self.client.post(url,data, HTTP_AUTHORIZATION=token)
+        response = self.client.post('http://cashapi-dev.eu-central-1.elasticbeanstalk.com' + url,data, HTTP_AUTHORIZATION=token)
         if self.print_output:
             print(response.content)
         self.assertNotEqual(response.status_code, 200, 201)

@@ -2,8 +2,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 
-from app import views as app_views
-from app.views import ImageViewSet
+from services import views as app_views
+from services.views import ImageViewSet
 
 image_list = ImageViewSet.as_view({
      'get': 'list',

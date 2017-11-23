@@ -2,15 +2,15 @@ import json
 from django.http import HttpResponse
 
 from oauth2_provider.contrib.rest_framework import OAuth2Authentication
-from requests import Response
+
 from rest_framework import status, permissions, viewsets
 from rest_framework.decorators import authentication_classes, permission_classes, api_view, detail_route
 from rest_framework.generics import get_object_or_404
 from rest_framework.parsers import MultiPartParser
 from rest_framework.views import APIView
 
-from app.models import UploadModel
-from app.serializers import ImageSerializer
+from services.models import UploadModel
+from services.serializers import ImageSerializer
 
 
 @api_view(['GET'])
