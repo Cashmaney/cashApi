@@ -36,7 +36,10 @@ DATABASES = {
 }
 print('Database - %s\n' % DATABASES.get('NAME'))
 # BOTO and django-storages
-STATIC_DIRECTORY = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+STATIC_URL = '/static/'
+STATIC_DIRECTORY = 'static/'  
+
 #STATIC_URL = S3_STATIC_URL + STATIC_DIRECTORY
 
 # https://github.com/ottoyiu/django-cors-headers/

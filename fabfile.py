@@ -12,11 +12,13 @@ from fabric.colors import red as _red, blue as _blue
 import boto
 from boto import sqs
 
-AWS_PROFILE=os.environ['AWS_PROFILE']
-EB_ENV_NAME=os.environ['EB_ENV_NAME']
-DOMAIN_NAME = EB_ENV_NAME + '.elasticbeanstalk.com '
+AWS_PROFILE=os.environ['name']
+EB_ENV_NAME=os.environ['cashApi-dev']
+
+AWS_REGION = 'eu-central-1'
+DOMAIN_NAME = AWS_REGION + '.elasticbeanstalk.com '
 BASE_URL = 'http://' + EB_ENV_NAME + '.' + DOMAIN_NAME
-AWS_REGION = 'us-east-1'
+
 ADMIN_USERNAME = 'admin'
 ADMIN_EMAIL = 'admin@mysite.com'
 ADMIN_INITIAL_PASSWORD = 'admin' # To be changed after first login by admin

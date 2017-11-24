@@ -13,7 +13,7 @@ from cashApi.apps import AppConfig
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 BASE_PROJECT_DIR = os.path.join(BASE_DIR, 'services')
-print('BASE_PROJECT_DIR = ' + BASE_PROJECT_DIR)
+print('BASE_PROJECT_DIR = %s' % BASE_PROJECT_DIR)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'v*kswpdyi3+*-=q4a)7&_!xwb%@udm1vi56r690!!j6e*p3^mn'
@@ -47,7 +47,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-MEDIA_ROOT = '/home/bob/IdeaProjects/cashApi/' + AppConfig.name + '/Storage/'
+MEDIA_ROOT = os.path.join(BASE_PROJECT_DIR, 'Storage')
+print('MEDIA_ROOT = %s' % MEDIA_ROOT)
 
 ROOT_URLCONF = 'cashApi.urls'
 
