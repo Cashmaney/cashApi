@@ -179,9 +179,23 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
+static_path = os.path.join(BASE_PROJECT_DIR, 'static')
+print('static_path = ' + static_path)
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    ('images', os.path.join(static_path, 'images')),
+    ('js', os.path.join(static_path, 'js')),
+    ('css', os.path.join(static_path, 'css')),
+)
+STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 # try:
 #     from example.local_settings import *
 # except ImportError:
