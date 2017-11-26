@@ -44,7 +44,7 @@ COPY . $DOC_WORK_DIR/.
 EXPOSE 8080
 
 COPY ./docker-entrypoint.sh /
-COPY ./django.conf /etc/nginx/sites-available/
+COPY ./django_nginx.conf /etc/nginx/sites-available/
 RUN ln -s /etc/nginx/sites-available/django_nginx.conf /etc/nginx/sites-enabled
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 ENTRYPOINT ["/docker-entrypoint.sh"]
