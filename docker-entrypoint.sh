@@ -3,17 +3,17 @@ python manage.py migrate        # Apply database migrations
 python manage.py collectstatic --clear --noinput # clearstatic files
 python manage.py collectstatic --noinput  # collect static files
 # Prepare log files and start outputting logs to stdout
-touch /srv/logs/gunicorn.log
-touch /srv/logs/access.log
-tail -n 0 -f /srv/logs/*.log &
+touch /var/app/logs/gunicorn.log
+touch /var/app/logs/access.log
+tail -n 0 -f /var/app/logs/*.log &
 echo Starting nginx
 # Start Gunicorn processes
 echo Starting Gunicorn.
-exec gunicorn cv_django_merchandising.wsgi:application \
-    --name cv_django_merchandising \
+exec gunicorn cashApi.wsgi:application \
+    --name cashApi \
     --bind unix:django_app.sock \
     --workers 3 \
     --log-level=info \
-    --log-file=/srv/logs/gunicorn.log \
-    --access-logfile=/srv/logs/access.log &
+    --log-file=/var/app/logs/gunicorn.log \
+    --access-logfile=/var/app/logs/access.log &
 exec service nginx start
