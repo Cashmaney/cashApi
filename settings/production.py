@@ -1,6 +1,6 @@
 from settings.common import *
 
-print('Initializing prod configuration - \n')
+print('Reading prod configuration - \n')
 PRODUCTION = True
 print('PRODUCTION - %s\n'% PRODUCTION)
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -36,9 +36,9 @@ DATABASES = {
 }
 print('Database - %s\n' % DATABASES.get('NAME'))
 # BOTO and django-storages
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+#STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 STATIC_URL = '/static/'
-STATIC_DIRECTORY = 'static/'  
+#STATIC_DIRECTORY = 'static/'  
 
 #STATIC_URL = S3_STATIC_URL + STATIC_DIRECTORY
 
