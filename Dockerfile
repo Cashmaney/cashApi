@@ -47,7 +47,7 @@ COPY ./docker-entrypoint.sh /
 COPY ./django_nginx.conf /etc/nginx/sites-available/
 RUN ln -s /etc/nginx/sites-available/django_nginx.conf /etc/nginx/sites-enabled
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-RUN ["chmod", "+x", "/docker-entrypoint.sh”]
+RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 #CMD ["/var/app/runserver.sh"]
