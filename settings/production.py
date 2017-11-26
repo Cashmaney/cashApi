@@ -36,7 +36,7 @@ DATABASES = {
 }
 print('Database - %s\n' % DATABASES.get('NAME'))
 # BOTO and django-storages
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 STATIC_DIRECTORY = 'static/'  
 
