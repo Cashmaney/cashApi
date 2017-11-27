@@ -8,3 +8,5 @@ Pillow
 requests==2.18.4
 psycopg2
 gunicorn
+python-social-auth==0.2.21
+

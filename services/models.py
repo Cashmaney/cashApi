@@ -4,12 +4,12 @@ from django.contrib.auth.models import User
 from django.db import models
 from social_django.models import AbstractUserSocialAuth, DjangoStorage, USER_MODEL
 
-from settings import common
+from settings.common import MEDIA_ROOT
 
 
 def user_directory_path(self, generated_filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    user_directory = common.MEDIA_ROOT + 'user_{0}'.format(self.user.id)
+    user_directory = MEDIA_ROOT + 'user_{0}'.format(self.user.id)
 
     gen_name, gen_ext = generated_filename.split('.')
 
