@@ -18,4 +18,4 @@ exec gunicorn cashApi.wsgi:application \
     --log-file=/var/app/logs/gunicorn.log \
     --access-logfile=/var/app/logs/access.log &
 exec service nginx start
-"$SCRIPT_PATH"
+./runserver.sh
