@@ -1,5 +1,4 @@
 #!/bin/bash
-$RUN_SCRIPT_PATH="./runserver.sh"
 python manage.py migrate        # Apply database migrations
 python manage.py collectstatic --clear --noinput # clearstatic files
 python manage.py collectstatic --noinput  # collect static files
@@ -18,4 +17,3 @@ exec gunicorn cashApi.wsgi:application \
     --log-file=/var/app/logs/gunicorn.log \
     --access-logfile=/var/app/logs/access.log &
 exec service nginx start
-#./runserver.sh
