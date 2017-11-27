@@ -1,5 +1,5 @@
 #!/bin/bash
-$RUN_SCRIPT_PATH="/path/to/script.sh"
+$RUN_SCRIPT_PATH="./runserver.sh"
 python manage.py migrate        # Apply database migrations
 python manage.py collectstatic --clear --noinput # clearstatic files
 python manage.py collectstatic --noinput  # collect static files
