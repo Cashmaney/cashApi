@@ -41,7 +41,7 @@ RUN pip install -r requirements.txt
 
 COPY . $DOC_WORK_DIR/.
 
-EXPOSE 8080
+EXPOSE 8000
 
 COPY ./docker-entrypoint.sh /
 COPY ./django_nginx.conf /etc/nginx/sites-available/
